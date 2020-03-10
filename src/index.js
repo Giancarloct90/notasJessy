@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const engine = require('ejs-mate');
 const session = require('express-session');
+const multer = require('multer');
 
 // SETTING
 // SET VIEW ENGINE
@@ -27,6 +28,16 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+// MULTER FOR IMAGES/FILES
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
+    filename: (req, file, fnCallback) => {
+        fnCallback(null, new Date().getTime() + path.extname(file.originalname));
+    }
+});
+app.use(multer({
+    storage
+}).array('images', 12));
 
 // ROUTES
 app.use(require('./routes/index'));

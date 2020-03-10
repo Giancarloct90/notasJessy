@@ -36,6 +36,11 @@ body {
     padding: 20px;
 }
 
+.sizeTable {
+    width: inherit;
+    min-height: 300px;
+}
+
 /**/
 /* .divDatosMaestros1 {
     height: 590px;

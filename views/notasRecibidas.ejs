@@ -59,7 +59,12 @@
                     <!-- <div class="form-group row">
                             <input id="datepicker" class="inputSize" width="276" name="txtDate" required />
                         </div> -->
-
+                    <div class="form-group row">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="image" name="image" required>
+                            <label class="custom-file-label" for="customFile">Selecione una imagen</label>
+                        </div>
+                    </div>
                     <!-- Send button -->
                     <div class="form-group row">
                         <button class="btn btn-info inputSize" type="submit">Send</button>
@@ -72,7 +77,7 @@
         <div class="col-md-8">
             <div class="divDatosMaestros">
                 <!--Table-->
-                <table class="table table-bordered" id="notasRecibidasTable">
+                <table class="table table-bordered sizeTable" id="notasRecibidasTable">
 
                     <!--Table head-->
                     <thead class="thead-dark">
@@ -112,6 +117,14 @@
 <script>
     $('#datepicker').datepicker({
         uiLibrary: 'bootstrap4'
+    });
+</script>
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 </script>
 

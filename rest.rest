@@ -9,3 +9,13 @@ content-type: application/json
 
 GET http://localhost:3000/borrarDatoMaestro/5e612cdf28177a156cab030c
 
+###
+
+POST http://localhost:3000/contador
+Content-Type: application/json
+
+{
+    "tipo": "E",
+    "contador": "1"
+}
+###
