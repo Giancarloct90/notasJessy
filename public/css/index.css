@@ -1,0 +1,48 @@
+/* Background body */
+body {
+    background: #3D7EAA;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFE47A, #3D7EAA);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFE47A, #3D7EAA);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+/* Size of input */
+.inputSize {
+    width: 100%;
+}
+
+/* background color navbar */
+.navBarColor {
+    background-color: cornflowerblue;
+    margin-bottom: 20px;
+}
+
+/* DIV CONTENIDO PRINCIPAL */
+.divContent {
+    height: auto;
+    width: auto;
+    padding: 20px;
+}
+
+/**/
+.divDatosMaestros {
+    height: 590px;
+    width: inherit;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/**/
+/* .divDatosMaestros1 {
+    height: 590px;
+    width: inherit;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding-top: 30%;
+    padding-left: 20px;
+    padding-right: 20px;
+} */

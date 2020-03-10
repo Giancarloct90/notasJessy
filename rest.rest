@@ -1,0 +1,11 @@
+POST http://localhost:3000/nuevoDatoMaestro
+content-type: application/json
+
+{
+    "txtNombreFDD": "sample",
+    "txtDescripcionFDD": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+###
+
+GET http://localhost:3000/borrarDatoMaestro/5e612cdf28177a156cab030c
+

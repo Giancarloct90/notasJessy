@@ -1,0 +1,139 @@
+<%- layout('layouts/main') %>
+
+
+<div class="container-fluid">
+    <h1 class="text-center">Notas Recibidas</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="divDatosMaestros">
+                <!-- Default form contact -->
+                <form action="/notasRecibidas" method="POST">
+                    <h4 class="text-center">Nueva Nota Recibida</h4>
+                    <br>
+                    <!-- Name -->
+                    <!-- <div class="form-group row">
+                            <input type="text" id="defaultContactFormName" class="form-control mb-2 inputSize"
+                                placeholder="Name">
+                        </div> -->
+
+                    <!-- Subject -->
+                    <div class="form-group row">
+                        <select class="browser-default custom-select mb-2 inputSize" name="tipoNota" required>
+                            <option value="" disabled selected>Tipo de NOTA</option>
+                            <% var tipoNotaDB %>
+                            <% var contador %>
+                            <% for(var tipoNota of tipoNotaDB) { %>
+                            <option value="<%- tipoNota.nombre %>"><%- tipoNota.nombre %></option>
+                            <% } %>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group row">
+                        <input type="text" id="defaultContactFormEmail" name="contador"
+                            class="form-control mb-2 inputSize" placeholder="No. Nota" autocomplete="off"
+                            value="<%- contador[0].contador %>" readonly="readonly">
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="form-group row">
+                        <select class="browser-default custom-select mb-2 inputSize" name="fueDirDep">
+                            <option value="" disabled selected>REMITENTE</option>
+                            <% var fueDirDepDB %>
+                            <% for(var fueDirDep of fueDirDepDB) { %>
+                            <option value="<%- fueDirDep.nombre %>"><%- fueDirDep.nombre %></option>
+                            <% } %>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="form-group row">
+                        <textarea class="form-control rounded-0 inputSize" id="exampleFormControlTextarea2" rows="3"
+                            placeholder="Descripcion..." name="descripcion"></textarea>
+                    </div>
+
+                    <!-- Datepicker -->
+                    <!-- <div class="form-group row">
+                            <input id="datepicker" class="inputSize" width="276" name="txtDate" required />
+                        </div> -->
+
+                    <!-- Send button -->
+                    <div class="form-group row">
+                        <button class="btn btn-info inputSize" type="submit">Send</button>
+                    </div>
+
+                </form>
+                <!-- Default form contact -->
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="divDatosMaestros">
+                <!--Table-->
+                <table class="table table-bordered" id="notasRecibidasTable">
+
+                    <!--Table head-->
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>No.</th>
+                            <th>Fecha Recibido</th>
+                            <th>Tipo de Nota</th>
+                            <th>Procedencia</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody>
+                        <% var notasRecibidasDB %>
+                        <% for(var notasRecibidas of notasRecibidasDB) { %>
+                        <tr>
+                            <td><%- notasRecibidas.numero %></td>
+                            <td><%- notasRecibidas.fechaCreacion.toDateString() %></td>
+                            <td><%- notasRecibidas.tipoNota %></td>
+                            <td><%- notasRecibidas.procedencia %></td>
+                            <td><%- notasRecibidas.descripcion %></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                    <!--Table body-->
+
+
+                </table>
+                <!--Table-->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#notasRecibidasTable').DataTable({
+            //para cambiar el lenguaje a español
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "sProcessing": "Procesando...",
+            }
+        });
+    });
+</script>

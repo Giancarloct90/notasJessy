@@ -1,0 +1,93 @@
+<%- layout('layouts/main') %>
+<div class="container-fluid">
+    <!-- TITULO -->
+    <h1 class="text-center mb-4">Tipos de Notas</h1>
+
+    <!-- ALERTAS -->
+    <% var flag %>
+    <% if(flag == true){ %>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong><%- msj1 %></strong> <%- msj2 %>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <% } %>
+    <% if(flag == false){ %>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Error!</strong> Ocurrio un error al guardar la informacion.
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <% } %>
+
+    <!-- Aqui comienza la pagina -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="divDatosMaestros">
+                <h4 class="text-center mb-3">Nuevo Tipo de Nota</h4>
+                <form action="/tipoNotaI" method="POST">
+                    <input type="text" name="nombre" class="form-control mb-3 inputSize" placeholder="Nombre" required
+                        autocomplete="off">
+                    <textarea class="form-control mb-3 inputSize" name="descripcion" rows="3"
+                        placeholder="Descripcion..." required></textarea>
+                    <input type="submit" class="btn btn-primary inputSize">
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="divDatosMaestros">
+                <table class="table table-bordered" id="tipoNotaTable">
+                    <thead class="thead-dark">
+                        <tr class="table-primary">
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% var tipoNotaDB %>
+                        <% for(var tipoNota of tipoNotaDB) { %>
+                        <tr>
+                            <td><%- tipoNota.nombre %></td>
+                            <td><%- tipoNota.descripcion %></td>
+                            <td><a class="fas fa-trash-alt" href="/tipoNotaD/<%- tipoNota.id %>"></a></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#tipoNotaTable').DataTable({
+            //para cambiar el lenguaje a español
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "sProcessing": "Procesando...",
+            }
+        });
+    });
+</script>
