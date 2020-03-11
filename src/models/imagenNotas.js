@@ -13,7 +13,8 @@ let imagenNotas = new Schema({
     },
     disponible: {
         type: Boolean,
-        default: true
+        default: true,
+        required: [true, 'la imagen es obligatoria']
     }
 });
 

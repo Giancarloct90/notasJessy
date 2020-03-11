@@ -1,7 +1,14 @@
-<%- layout('layouts/main') %>
+<!-- <%- layout('layouts/main') %> -->
+
+<% layout('layouts/main') -%>
 <div class="container-fluid">
     <div class="row">
         <% notaDB %>
         <h1>Detalles de Nota No. <%- notaDB.numero %></h1>
     </div>
+    <br>
+    <% for(var imagenNotas of imagenNotasDB) { %>
+    <h4>\rrpp\2020\3<%- imagenNotas.imagen %></h4>
+    <img src="\rrpp\2020\3\<%- imagenNotas.imagen %>" alt="" width="193" height="130">
+    <% } %>
 </div>

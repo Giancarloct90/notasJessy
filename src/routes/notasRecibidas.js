@@ -110,24 +110,38 @@ app.post('/contador', async (req, res) => {
     }
 });
 
+app.get('/te', (req, res) => {
+    let sess = req.session;
+    console.log(sess.notadb);
+    console.log(sess.imag);
+    res.render('detalleNotaRecibida.ejs', {
+        notaDB: sess.notadb,
+        imagenNotasDB: sess.imag
+    });
+});
+
 // GET ONE NOTE
 app.get('/detalleNotaRecibida/:id', async (req, res) => {
     let id = req.params.id,
         imagenNotasDB, notaDB;
+    let sess = req.session;
     console.log(id);
     try {
         notaDB = await Notas.findById(id);
         console.log(notaDB);
         try {
             imagenNotasDB = await ImagenNotas.find({
-                idNota: '5e693b6320b01d1f5c459e35',
-                disponible: true
+                idNota: notaDB.id,
+
             });
             console.log(imagenNotasDB);
-            res.render('detalleNotaRecibida.ejs', {
-                notaDB: notaDB,
-                imagenNotasDB: imagenNotasDB
-            });
+            sess.notadb = notaDB;
+            sess.imag = imagenNotasDB;
+            res.redirect('/te');
+            // res.render('detalleNotaRecibida.ejs', {
+            //     notaDB: notaDB,
+            //     imagenNotasDB: imagenNotasDB
+            // });
         } catch (e) {
             console.log('error en la obtencion de imagenes', e);
         }
