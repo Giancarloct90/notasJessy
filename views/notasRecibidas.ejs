@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <div class="divDatosMaestros">
                 <!-- Default form contact -->
-                <form action="/notasRecibidas" method="POST">
+                <form action="/notasRecibidas" enctype="multipart/form-data" method="POST">
                     <h4 class="text-center">Nueva Nota Recibida</h4>
                     <br>
                     <!-- Name -->
@@ -51,23 +51,41 @@
 
                     <!-- Message -->
                     <div class="form-group row">
-                        <textarea class="form-control rounded-0 inputSize" id="exampleFormControlTextarea2" rows="3"
-                            placeholder="Descripcion..." name="descripcion"></textarea>
+                        <textarea class="form-control rounded-0 inputSize mb-2" id="exampleFormControlTextarea2"
+                            rows="3" placeholder="Descripcion..." name="descripcion"></textarea>
                     </div>
 
                     <!-- Datepicker -->
                     <!-- <div class="form-group row">
                             <input id="datepicker" class="inputSize" width="276" name="txtDate" required />
                         </div> -->
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image" name="image" required>
+                            <input type="file" class="custom-file-input" id="image" name="image" required multiple
+                                data-show-upload="true">
                             <label class="custom-file-label" for="customFile">Selecione una imagen</label>
                         </div>
+                    </div> -->
+
+                    <!--  -->
+                    <!-- <div class="form-group row">
+                        <input type="file" name="ima" multiple class="inputSize">
+                        <input id="input-2" name="input2[]" type="file" class="file" multiple data-show-upload="true"
+                            data-show-caption="true">
+                    </div> -->
+
+                    <!-- File upload multiple -->
+                    <!-- <label><strong>Upload Files</strong></label> -->
+                    <div class="form-group row">
+                        <div class="custom-file">
+                            <input type="file" name="imagenes" multiple class="custom-file-input mb-2" id="customFile">
+                            <label class="custom-file-label mb-2" for="customFile">Selecione Imagenes</label>
+                        </div>
                     </div>
+
                     <!-- Send button -->
                     <div class="form-group row">
-                        <button class="btn btn-info inputSize" type="submit">Send</button>
+                        <button class="btn btn-info inputSize mb-2" type="submit">Send</button>
                     </div>
 
                 </form>
@@ -77,7 +95,7 @@
         <div class="col-md-8">
             <div class="divDatosMaestros">
                 <!--Table-->
-                <table class="table table-bordered sizeTable" id="notasRecibidasTable">
+                <table class="table table-bordered" id="notasRecibidasTable">
 
                     <!--Table head-->
                     <thead class="thead-dark">
@@ -87,6 +105,7 @@
                             <th>Tipo de Nota</th>
                             <th>Procedencia</th>
                             <th>Descripcion</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <!--Table head-->
@@ -101,6 +120,7 @@
                             <td><%- notasRecibidas.tipoNota %></td>
                             <td><%- notasRecibidas.procedencia %></td>
                             <td><%- notasRecibidas.descripcion %></td>
+                            <td><a href="/detalleNotaRecibida/<%- notasRecibidas.id %>">VER DETALLE</a></td>
                         </tr>
                         <% } %>
                     </tbody>
@@ -122,9 +142,27 @@
 
 <script>
     // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    // $(".custom-file-input").on("change", function () {
+    //     var fileName = $(this).val().split("\\").pop();
+    //     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    // });
+    $(document).ready(function () {
+        $('input[type="file"]').on("change", function () {
+            let filenames = [];
+            let files = document.getElementById("customFile").files;
+            if (files.length > 1) {
+                filenames.push("Total de imagenes (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this)
+                .next(".custom-file-label")
+                .html(filenames.join(","));
+        });
     });
 </script>
 

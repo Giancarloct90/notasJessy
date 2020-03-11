@@ -29,15 +29,16 @@ app.use(session({
     saveUninitialized: true
 }));
 // MULTER FOR IMAGES/FILES
+// destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
 const storage = multer.diskStorage({
     destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
     filename: (req, file, fnCallback) => {
-        fnCallback(null, new Date().getTime() + path.extname(file.originalname));
+        fnCallback(null, `${new Date().getMonth() + 1}${new Date().getFullYear()}_${new Date().getTime() + path.extname(file.originalname)}`);
     }
 });
 app.use(multer({
     storage
-}).array('images', 12));
+}).array('imagenes', 10));
 
 // ROUTES
 app.use(require('./routes/index'));
