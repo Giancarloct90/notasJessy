@@ -4,8 +4,16 @@ let Schema = mongoose.Schema;
 
 let notas = new Schema({
     fechaCreacion: {
-        type: Date,
-        default: Date.now
+        type: String,
+        required: [true, 'La fecha de nota es necesario']
+    },
+    mes: {
+        type: String,
+        required: [true, 'El mes es necesario']
+    },
+    anio: {
+        type: String,
+        required: [true, 'El anio es necesario']
     },
     tipoNota: {
         type: String,

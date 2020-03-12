@@ -31,7 +31,7 @@ app.use(session({
 // MULTER FOR IMAGES/FILES
 // destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
+    destination: path.join(__dirname, `../public/rrpp/`),
     filename: (req, file, fnCallback) => {
         fnCallback(null, `${new Date().getMonth() + 1}${new Date().getFullYear()}_${new Date().getTime() + path.extname(file.originalname)}`);
     }

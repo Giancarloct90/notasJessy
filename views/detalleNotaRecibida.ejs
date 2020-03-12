@@ -1,14 +1,32 @@
 <!-- <%- layout('layouts/main') %> -->
 
 <% layout('layouts/main') -%>
-<div class="container-fluid">
+
+<!-- <% if(imagenNotasDB.length == 3) { %>
+<h1>viene vacio</h1>
+<% } %> -->
+<div class="container">
     <div class="row">
-        <% notaDB %>
-        <h1>Detalles de Nota No. <%- notaDB.numero %></h1>
+        <div class="col-md-12 divContent2">
+            <% notaDB %>
+            <h1 class="text-center mb-3">Detalles de Nota</h1>
+            <h4>Numero de Nota: <%- notaDB.numero %></h4><br>
+            <h4>Fecha Recibida: <%- notaDB.fechaCreacion %></h4><br>
+            <h4>Tipo de Nota: <%- notaDB.tipoNota %></h4><br>
+            <h4>Procedencia: <%- notaDB.procedencia %></h4><br>
+            <h4>Descripcion: <%- notaDB.descripcion %></h4><br>
+            <div class="row">
+                <% for(var imagenNotas of imagenNotasDB) { %>
+                <div class="col-md-4">
+                    <img id="im" src="\rrpp\<%- imagenNotas.imagen %>" alt="" class="imagenNotas"><br>
+                    <label for="im"><a href="http://localhost:3000/rrpp/<%- imagenNotas.imagen %>">VER
+                            IMAGEN</a></label>
+                </div>
+                <% } %>
+            </div>
+        </div>
     </div>
+
     <br>
-    <% for(var imagenNotas of imagenNotasDB) { %>
-    <h4>\rrpp\2020\3<%- imagenNotas.imagen %></h4>
-    <img src="\rrpp\2020\3\<%- imagenNotas.imagen %>" alt="" width="193" height="130">
-    <% } %>
+
 </div>

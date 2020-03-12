@@ -2,31 +2,34 @@
 
 <div class="container-fluid">
     <h1 class="text-center mb-4">Fuerza, Direccion, Organismo, Dependencia</h1>
-    <% var flag %>
-    <% if(flag == true){ %>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 text-center">
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong><%- msj1 %></strong> <%- msj2 %>
+    <div class="divNotificaciones">
+        <% var flag %>
+        <% if(flag == true){ %>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-center">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong><%- msj1 %></strong> <%- msj2 %>
+                </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
-    </div>
-    <% } %>
-    <% if(flag == false){ %>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 text-center">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong> Ocurrio un error al guardar la informacion.
+        <% } %>
+        <% if(flag == false){ %>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-center">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Error!</strong> Ocurrio un error al guardar la informacion.
+                </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
+        <% } %>
     </div>
-    <% } %>
+
     <!-- LA PAGINA COMIENZA AQUI -->
     <div class="row">
         <div class="col-md-4">

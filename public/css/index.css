@@ -51,3 +51,27 @@ body {
     padding-left: 20px;
     padding-right: 20px;
 } */
+
+/**/
+.divContent2 {
+    height: auto;
+    width: inherit;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Las configuraciones de las imagenes */
+.imagenNotas {
+    height: auto;
+    width: inherit;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+/* Notificaciones */
+.divNotificaciones {
+    width: inherit;
+    height: 60px;
+    margin-bottom: 10px;
+}

@@ -39,6 +39,7 @@ app.post('/nuevoDatoMaestro', async (req, res) => {
         const fueDirDepDB = new FueDirDep();
         fueDirDepDB.nombre = body.txtNombreFDD;
         fueDirDepDB.descripcion = body.txtDescripcionFDD;
+        fueDirDepDB.disponible = true;
         await fueDirDepDB.save();
         let flag = true;
         res.render('fueDirDep', {
