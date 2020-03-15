@@ -2,35 +2,31 @@
 
 <div class="container-fluid">
     <!-- Titulo -->
-    <h1 class="text-center">Notas Recibidas</h1>
+    <h1 class="text-center mb-4">Notas Recibidas</h1>
 
     <!-- Notificaciones -->
-    <div class="divNotificaciones">
-        <div class="row">
-            <% var notificacion %>
-            <% if(flag == true) { %>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-center">
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong><%- msj1 %></strong> <%- msj2 %>
-                </div>
-            </div>
-            <div class="col-md-4"></div>
-            <% flag = false %>
-            <% } %>
-            <!-- <% flag = false %> -->
-        </div>
-    </div>
+    <% var notificacion %>
+    <% if(flag == true) { %>
+    <script src="js/utils/utils.js"></script>
+    <script>
+        notify('Guardado!', 'La informacion se guardo con exito.');
+    </script>
+
+    <% flag = false %>
+    <% } %>
+    <!-- <% flag = false %> -->
 
     <!-- Inicio de Pagina -->
     <div class="row">
+        <!-- FORM  -->
         <div class="col-md-4">
             <div class="divDatosMaestros">
+                <button id="bn" class="btn btn-primary mb-2">click me</button>
                 <!-- Default form contact -->
                 <form action="/notasRecibidas" enctype="multipart/form-data" method="POST">
                     <h4 class="text-center">Nueva Nota Recibida</h4>
                     <br>
+
                     <!-- Name -->
                     <!-- <div class="form-group row">
                             <input type="text" id="defaultContactFormName" class="form-control mb-2 inputSize"
@@ -112,48 +108,63 @@
                 <!-- Default form contact -->
             </div>
         </div>
+
+        <!-- TABLE -->
         <div class="col-md-8">
             <div class="divDatosMaestros">
                 <!--Table-->
-                <table class="table table-bordered" id="notasRecibidasTable">
+                <div class="table-responsive-sm">
+                    <table class="table table-bordered" id="notasRecibidasTable">
 
-                    <!--Table head-->
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Fecha Recibido</th>
-                            <th>Tipo de Nota</th>
-                            <th>Procedencia</th>
-                            <th>Descripcion</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <!--Table head-->
+                        <!--Table head-->
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>No.</th>
+                                <th>Fecha Recibido</th>
+                                <th>Tipo de Nota</th>
+                                <th>Procedencia</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
 
-                    <!--Table body-->
-                    <tbody>
-                        <% var notasRecibidasDB %>
-                        <% for(var notasRecibidas of notasRecibidasDB) { %>
-                        <tr>
-                            <td><%- notasRecibidas.numero %></td>
-                            <td><%- notasRecibidas.fechaCreacion %></td>
-                            <td><%- notasRecibidas.tipoNota %></td>
-                            <td><%- notasRecibidas.procedencia %></td>
-                            <td><%- notasRecibidas.descripcion %></td>
-                            <td><a href="/detalleNotaRecibida/<%- notasRecibidas.id %>">VER DETALLE</a></td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                    <!--Table body-->
+                        <!--Table body-->
+                        <tbody>
+                            <% var notasRecibidasDB %>
+                            <% for(var notasRecibidas of notasRecibidasDB) { %>
+                            <tr>
+                                <td><%- notasRecibidas.numero %></td>
+                                <td><%- notasRecibidas.fechaCreacion %></td>
+                                <td><%- notasRecibidas.tipoNota %></td>
+                                <td><%- notasRecibidas.procedencia %></td>
+                                <td><%- notasRecibidas.descripcion %></td>
+                                <td><a href="/detalleNotaRecibida/<%- notasRecibidas.id %>">VER DETALLE</a></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                        <!--Table body-->
 
 
-                </table>
+                    </table>
+                </div>
                 <!--Table-->
             </div>
         </div>
     </div>
 
 </div>
+
+<script>
+    $('#bn').click(function () {
+        // alert('Hello');
+        // alertify.alert('Ready!');
+        alertify.success('Success message', 'top-right');
+    });
+    $('#bn').click(function () {
+        alertify.success('Success message');
+    });
+</script>
 
 <script>
     $('#datepicker').datepicker({

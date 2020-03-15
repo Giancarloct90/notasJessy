@@ -46,17 +46,12 @@ app.get('/notasRecibidas', async (req, res) => {
                 ContadorNotasDB = await ContadorNotas.find({
                     tipo: 'R'
                 });
-                console.log(sess.notaSaved);
                 if (sess.notaSaved) {
                     flag = true
                 }
                 sess.notaSaved = false;
-                console.log(sess.notaSaved);
-
                 res.render('notasRecibidas', {
                     flag: flag,
-                    msj1: 'Guardado!',
-                    msj2: 'La informacion se guardo con exito.',
                     notasRecibidasDB: await getAllNotas(),
                     contador: ContadorNotasDB,
                     tipoNotaDB: tipoNotaDB,
