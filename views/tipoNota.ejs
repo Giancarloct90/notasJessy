@@ -3,25 +3,16 @@
     <!-- TITULO -->
     <h1 class="text-center mb-4">Tipos de Notas</h1>
 
-    <!-- ALERTAS -->
-    <div class="divNotificaciones">
-        <% var flag %>
-        <% if(flag == true){ %>
-
-        <% } %>
-        <% if(flag == false){ %>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-center">
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Error!</strong> Ocurrio un error al guardar la informacion.
-                </div>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-        <% } %>
-    </div>
+    <!-- NOTIFICACIONES -->
+    <% var flag %>
+    <% if(flag == true){ %>
+    <script>
+        notify('<%- msj1 %>', '<%- msj2 %>');
+    </script>
+    <% } %>
+    <% if(flag == false){ %>
+    <!-- SI OCURRIO UN ERROR -->
+    <% } %>
 
     <!-- Aqui comienza la pagina -->
     <div class="row">
@@ -53,7 +44,7 @@
                         <tr>
                             <td><%- tipoNota.nombre %></td>
                             <td><%- tipoNota.descripcion %></td>
-                            <td><a class="fas fa-trash-alt" href="/tipoNotaD/<%- tipoNota.id %>"></a></td>
+                            <td><a class="fa fa-trash-alt" href="/tipoNotaD/<%- tipoNota.id %>"></a></td>
                         </tr>
                         <% } %>
                     </tbody>

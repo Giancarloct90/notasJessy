@@ -22,7 +22,7 @@ const getAllNotas = async () => {
 // FUNCTION GETFECHA
 let getFecha = () => {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    const dias = [, "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+    const dias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
     return {
         fechaTotal: `${dias[new Date().getDay()]} ${new Date().getDate()} de ${meses[new Date().getMonth()]} del ${new Date().getFullYear()}`,
         mes: `${meses[new Date().getMonth()]}`,
@@ -52,6 +52,8 @@ app.get('/notasRecibidas', async (req, res) => {
                 sess.notaSaved = false;
                 res.render('notasRecibidas', {
                     flag: flag,
+                    msj1: 'Guardado! ',
+                    msj2: 'La informacion se guardo con exito.',
                     notasRecibidasDB: await getAllNotas(),
                     contador: ContadorNotasDB,
                     tipoNotaDB: tipoNotaDB,
@@ -134,10 +136,9 @@ app.post('/contador', async (req, res) => {
     }
 });
 
-app.get('/te', (req, res) => {
+// GET DETAILS ONE NOTE
+app.get('/detalleNotaRecibida', (req, res) => {
     let sess = req.session;
-    // console.log(sess.notadb);
-    // console.log(sess.imag);
     res.render('detalleNotaRecibida.ejs', {
         notaDB: sess.notadb,
         imagenNotasDB: sess.imag
@@ -149,23 +150,16 @@ app.get('/detalleNotaRecibida/:id', async (req, res) => {
     let id = req.params.id,
         imagenNotasDB, notaDB;
     let sess = req.session;
-    // console.log(id);
     try {
         notaDB = await Notas.findById(id);
-        // console.log(notaDB);
         try {
             imagenNotasDB = await ImagenNotas.find({
                 idNota: notaDB.id,
                 disponible: true,
             });
-            // console.log(imagenNotasDB);
             sess.notadb = notaDB;
             sess.imag = imagenNotasDB;
-            res.redirect('/te');
-            // res.render('detalleNotaRecibida.ejs', {
-            //     notaDB: notaDB,
-            //     imagenNotasDB: imagenNotasDB
-            // });
+            res.redirect('/detalleNotaRecibida');
         } catch (e) {
             console.log('error en la obtencion de imagenes', e);
         }

@@ -29,11 +29,12 @@ body {
 
 /**/
 .divDatosMaestros {
-    height: 590px;
+    height: auto;
     width: inherit;
     border: 2px solid white;
     border-radius: 8px;
     padding: 20px;
+    margin-bottom: 50px;
 }
 
 .sizeTable {
@@ -74,4 +75,30 @@ body {
     width: inherit;
     height: 60px;
     margin-bottom: 10px;
+}
+
+/* CON ESTE LE DAMOS ESTILO AL DIV CON EL QUE ENCOJEMOS EL DATATABLE */
+#resize_handle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5em;
+    border-bottom-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 1.5em;
+    background-color: #4d90fe;
+    color: white;
+    cursor: pointer;
+}
+
+#resize_wrapper {
+    height: auto;
+}
+
+/* ESTE CODIGO ES PARA DESABILITAR EL COMBOBOX CON EL CUAL SE ELIGE LA CANTIDAD DE DATOS QUE SE VAN A VER */
+div.dataTables_length {
+    display: none;
 }

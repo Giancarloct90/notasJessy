@@ -20,13 +20,11 @@ app.get('/tipoNotas', async (req, res) => {
     let flag, msj1, msj2;
     if (sess.notaDelete) {
         flag = true;
-        msj1 = 'Borrado!';
-        msj2 = 'La informacion se borro con exito.';
     }
     res.render('tipoNota', {
         flag,
-        msj1,
-        msj2,
+        msj1: 'Borrado! ',
+        msj2: 'La informacion se borro con exito.',
         tipoNotaDB: await getTipoNota()
     });
 });
@@ -42,7 +40,7 @@ app.post('/tipoNotaI', async (req, res) => {
         await tipoNotaDB.save();
         res.render('tipoNota', {
             flag: true,
-            msj1: 'Guardado!',
+            msj1: 'Guardado! ',
             msj2: 'La informacion se guardo con exito.',
             tipoNotaDB: await getTipoNota()
         });

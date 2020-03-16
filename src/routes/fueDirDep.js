@@ -21,13 +21,11 @@ app.get('/datosMaestros', async (req, res) => {
     let flag, msj1, msj2;
     if (sess.FueDirDep) {
         flag = true;
-        msj1 = 'Borrado!';
-        msj2 = 'La informacion se borro con exito.';
     }
     res.render('fueDirDep', {
         flag,
-        msj1,
-        msj2,
+        msj1: 'Borrado! ',
+        msj2: 'La informacion se borro con exito.',
         fueDirDepDB: await getfueDirDep()
     })
 });
@@ -41,10 +39,9 @@ app.post('/nuevoDatoMaestro', async (req, res) => {
         fueDirDepDB.descripcion = body.txtDescripcionFDD;
         fueDirDepDB.disponible = true;
         await fueDirDepDB.save();
-        let flag = true;
         res.render('fueDirDep', {
             flag: true,
-            msj1: 'Guardado!',
+            msj1: 'Guardado! ',
             msj2: 'La informacion se guardo con exito.',
             fueDirDepDB: await getfueDirDep()
         });
