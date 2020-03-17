@@ -1,5 +1,191 @@
 <%- layout('layouts/main') %>
 
 <div class="container-fluid">
-    <h1 class="text-center">Notas Enviadas</h1>
+    <!-- TITULO -->
+    <h1 class="text-center mb-4">Notas Enviadas</h1>
+
+    <!-- INICIO DE PAGINA -->
+    <div class="row">
+
+        <!-- FORM -->
+        <div class="col-md-4">
+            <div class="divContent3">
+                <form action="/notasEnviadas" enctype="multipart/form-data" method="POST">
+
+                    <!-- TITULO FORM -->
+                    <h4 class="text-center mb-4">Nueva Nota Enviada</h4>
+
+                    <!-- COMBOBOX TIPO NOTA -->
+                    <div class="form-group row">
+                        <select class="browser-default custom-select mb-2 inputSize" name="tipoNota" required>
+                            <option value="" disabled selected>Tipo Nota</option>
+                            <% tipoNotaDB.forEach(tipoNota => { %>
+                            <option value="<%- tipoNota.nombre %>"><%- tipoNota.nombre %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <!-- TEXT CONTADOR -->
+                    <div class="form-group row">
+                        <input type="text" name="contador" class="form-control mb-2 inputSize"
+                            value="<%- contador[0].contador %>" readonly>
+                    </div>
+
+                    <!-- COMBOBOX FUERZADIRDEP -->
+                    <!-- array1.forEach(element => console.log(element)); -->
+                    <div class="form-group row">
+                        <select class="browser-default custom-select mb-2 inputSize" name="fueDirDep" required>
+                            <option value="" disabled selected>Destinatario</option>
+                            <% fueDirDepDB.forEach(fueDirDep => { %>
+                            <option value="<%- fueDirDep.nombre %>"><%- fueDirDep.nombre %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <!-- TEXTAREA DESCRIPTION -->
+                    <div class="form-group row">
+                        <textarea class="form-control rounded-0 inputSize mb-2" rows="3"
+                            placeholder="Descripcion de la Nota..." name="descripcion" required></textarea>
+                    </div>
+
+                    <!-- FILE UPLOAD MULTIPLE FILE -->
+                    <div class="form-group row">
+                        <div class="custom-file">
+                            <input type="file" name="imagenes" multiple class="custom-file-input mb-2" id="customFile"
+                                required>
+                            <label class="custom-file-label mb-2" for="customFile">Selecione Imagenes</label>
+                        </div>
+                    </div>
+
+                    <!-- BTN SAVE -->
+                    <div class="form-group row">
+                        <button class="btn btn-info inputSize mb-2" type="submit">Guardar <i
+                                class="far fa-save"></i></button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="col-md-8">
+            <div class="divContent3">
+                <div class="table-responsive-sm" id="resize_wrapper">
+                    <table class="table table-bordered pageResize compact order-column" id="notasEnviadasTable">
+
+                        <!--Table head-->
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>No.</th>
+                                <th>Fecha Enviada</th>
+                                <th>Tipo de Nota</th>
+                                <th>Destino</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                            <% const acortarDescripcion = (str, num) => {%>
+                            <%   if (str.length <= num) {%>
+                            <%       return str%>
+                            <%   }%>
+                            <%    return str.slice(0, num) + '...';%>
+                            <% }; %>
+                            <% for(var notasEnviadas of notasEnviadasDB) { %>
+                            <tr>
+                                <td><%- notasEnviadas.numero %></td>
+                                <td><%- notasEnviadas.fechaCreacion %></td>
+                                <td><%- notasEnviadas.tipoNota %></td>
+                                <td><%- notasEnviadas.procedencia %></td>
+                                <td><%- acortarDescripcion(notasEnviadas.descripcion, 50) %></td>
+                                <td><a href="/detalleNotaRecibida/<%- notasEnviadas.id %>">VER DETALLE</a></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                        <!--Table body-->
+
+
+                    </table>
+                    <br>
+                    <div id="resize_handle" class="mt-3">Click y Arrástrame!</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
+
+<!-- SCRIPT TO RENAME THE FILE INPUT IN THE FORM -->
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').on("change", function () {
+            let filenames = [];
+            let files = document.getElementById("customFile").files;
+            if (files.length > 1) {
+                filenames.push("Total de imagenes (" + files.length + ")");
+            } else {
+                for (let i in files) {
+                    if (files.hasOwnProperty(i)) {
+                        filenames.push(files[i].name);
+                    }
+                }
+            }
+            $(this)
+                .next(".custom-file-label")
+                .html(filenames.join(","));
+        });
+    });
+</script>
+
+<!-- SCRIPT  DATATABLE -->
+<script>
+    // ESTE SCRIPT MANEJA EL CODIGO EL DIV QUE HACE QUE SE ENCOJA EL DATATABLE
+    $(document).ready(function () {
+        // LA TABLA TIENE QUE ESTAR ADENTRO DE UN DIV CON EL ID DE resize_wrapper.
+        // AL FINAL DE LA TABLA TIENE QUE ESTAR UN DIV CON ID resize_handle Y EL CSS TAMBIEN TIENE SU CONFIGURACION
+        var wrapper = $('#resize_wrapper');
+        $('#resize_handle').on('mousedown', function (e) {
+            var mouseStartY = e.pageY;
+            var resizeStartHeight = wrapper.height();
+            $(document)
+                .on('mousemove.demo', function (e) {
+                    var height = resizeStartHeight + (e.pageY - mouseStartY);
+                    if (height < 180) {
+                        height = 180;
+                    }
+                    wrapper.height(height);
+                })
+                .on('mouseup.demo', function (e) {
+                    $(document).off('mousemove.demo mouseup.demo');
+                });
+            return false;
+        });
+
+        // CONFIG DATATABLE TO SPANISH 
+        $('#notasEnviadasTable').DataTable({
+            // pageResizing Plug-In (Optional).
+            pageLength: 15,
+
+            //para cambiar el lenguaje a español
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "sProcessing": "Procesando...",
+            }
+        });
+    });
+</script>

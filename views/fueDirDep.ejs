@@ -16,8 +16,9 @@
 
     <!-- LA PAGINA COMIENZA AQUI -->
     <div class="row">
+        <!-- FORM  -->
         <div class="col-md-4">
-            <div class="divDatosMaestros">
+            <div class="divContent3">
                 <h4 class="text-center">Nueva Fuerza, Direccion, Organismo, Dependencia</h4>
                 <br>
                 <form action="/nuevoDatoMaestro" method="POST">
@@ -29,43 +30,74 @@
                 </form>
             </div>
         </div>
+
+        <!-- TABLE -->
         <div class="col-md-8">
-            <div class="divDatosMaestros">
+            <div class="divContent3">
                 <!--Table-->
-                <table class="table table-bordered" id="DatosMaestros">
+                <div class="table-responsive-sm" id="resize_wrapper">
+                    <table class="table table-bordered pageResize compact order-column" id="fueDirDepTable">
 
-                    <!--Table head-->
-                    <thead class="thead-dark">
-                        <tr class="table-primary">
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <!--Table head-->
+                        <!--Table head-->
+                        <thead class="thead-dark">
+                            <tr class="table-primary">
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
 
-                    <!--Table body-->
-                    <tbody>
-                        <% var fueDirDepDB %>
-                        <% for(var fueDirDep of fueDirDepDB) { %>
-                        <tr>
-                            <td><%- fueDirDep.nombre %></td>
-                            <td><%- fueDirDep.descripcion %></td>
-                            <td><a class="fas fa-trash-alt" href="/borrarDatoMaestro/<%- fueDirDep.id %>"></a>
-                            </td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                    <!--Table body-->
-                </table>
-                <!--Table-->
+                        <!--Table body-->
+                        <tbody>
+                            <% var fueDirDepDB %>
+                            <% for(var fueDirDep of fueDirDepDB) { %>
+                            <tr>
+                                <td><%- fueDirDep.nombre %></td>
+                                <td><%- fueDirDep.descripcion %></td>
+                                <td><a class="fas fa-trash-alt" href="/borrarDatoMaestro/<%- fueDirDep.id %>"></a>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                        <!--Table body-->
+                    </table>
+                    <!--Table-->
+                    <br>
+                    <div id="resize_handle" class="mt-3">Click y Arrástrame!</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        $('#DatosMaestros').DataTable({
+        // LA TABLA TIENE QUE ESTAR ADENTRO DE UN DIV CON EL ID DE resize_wrapper.
+        // AL FINAL DE LA TABLA TIENE QUE ESTAR UN DIV CON ID resize_handle Y EL CSS TAMBIEN TIENE SU CONFIGURACION
+        var wrapper = $('#resize_wrapper');
+        $('#resize_handle').on('mousedown', function (e) {
+            var mouseStartY = e.pageY;
+            var resizeStartHeight = wrapper.height();
+
+            $(document)
+                .on('mousemove.demo', function (e) {
+                    var height = resizeStartHeight + (e.pageY - mouseStartY);
+                    if (height < 180) {
+                        height = 180;
+                    }
+
+                    wrapper.height(height);
+                })
+                .on('mouseup.demo', function (e) {
+                    $(document).off('mousemove.demo mouseup.demo');
+                });
+
+            return false;
+        });
+
+        // CONFIG DATATABLE TO SPANISH 
+        $('#fueDirDepTable').DataTable({
+            pageLength: 15,
             //para cambiar el lenguaje a español
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros",

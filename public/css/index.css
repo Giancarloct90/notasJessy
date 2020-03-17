@@ -27,8 +27,8 @@ body {
     padding: 20px;
 }
 
-/**/
-.divDatosMaestros {
+/* ESTE DIV ESTA EN LOS FORM Y EN LAS TABLAS */
+.divContent3 {
     height: auto;
     width: inherit;
     border: 2px solid white;

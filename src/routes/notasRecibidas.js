@@ -1,72 +1,35 @@
 const express = require('express');
 const app = express();
-const TipoNota = require('../models/tipoNota');
-const FueDirDep = require('../models/fueDirDep');
-const ContadorNotas = require('../models/contadorNotas');
-const Notas = require('../models/notas');
 const ImagenNotas = require('../models/imagenNotas');
-
-// FUNCTION GET ALL DATA
-const getAllNotas = async () => {
-    try {
-        let notaBD = await Notas.find({
-            tipo: 'R',
-            disponible: true
-        });
-        return notaBD;
-    } catch (e) {
-        console.log('Error zoe:', e);
-    }
-};
-
-// FUNCTION GETFECHA
-let getFecha = () => {
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    const dias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-    return {
-        fechaTotal: `${dias[new Date().getDay()]} ${new Date().getDate()} de ${meses[new Date().getMonth()]} del ${new Date().getFullYear()}`,
-        mes: `${meses[new Date().getMonth()]}`,
-        anio: `${new Date().getFullYear()}`
-    }
-};
+const Notas = require('../models/notas');
+const ContadorNotas = require('../models/contadorNotas');
+const {
+    getFecha,
+    getAllNotas,
+    getTipoNotas,
+    getFueDirDep,
+    getContadorNotas
+} = require('../utils/utils');
 
 // GET TO VIEW THE PAGE OF INFORMATION
 app.get('/notasRecibidas', async (req, res) => {
-    let tipoNotaDB, fueDirDepDB, contador, ContadorNotasDB, notasRecibidasDB, sess = req.session,
-        notificacion, flag;
+    let sess = req.session,
+        flag;
     try {
-        tipoNotaDB = await TipoNota.find({
-            disponible: true
-        });
-        try {
-            fueDirDepDB = await FueDirDep.find({
-                disponible: true
-            });
-            try {
-                ContadorNotasDB = await ContadorNotas.find({
-                    tipo: 'R'
-                });
-                if (sess.notaSaved) {
-                    flag = true
-                }
-                sess.notaSaved = false;
-                res.render('notasRecibidas', {
-                    flag: flag,
-                    msj1: 'Guardado! ',
-                    msj2: 'La informacion se guardo con exito.',
-                    notasRecibidasDB: await getAllNotas(),
-                    contador: ContadorNotasDB,
-                    tipoNotaDB: tipoNotaDB,
-                    fueDirDepDB: fueDirDepDB
-                });
-            } catch (e) {
-                console.log('Error: get Contador', e);
-            }
-        } catch (e) {
-            console.log('Error: get fueDirDep', e);
+        if (sess.notaSaved) {
+            flag = true
         }
+        res.render('notasRecibidas', {
+            flag: flag,
+            msj1: 'Guardado! ',
+            msj2: 'La informacion se guardo con exito.',
+            notasRecibidasDB: await getAllNotas('R'),
+            contador: await getContadorNotas('R'),
+            tipoNotaDB: await getTipoNotas(),
+            fueDirDepDB: await getFueDirDep()
+        });
     } catch (e) {
-        console.log('Error: get tipo Nota', e);
+        console.log('Error tratando de obtener toda la informacion de notas Recibidas');
     }
 });
 
