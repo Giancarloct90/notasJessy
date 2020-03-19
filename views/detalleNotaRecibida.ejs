@@ -8,20 +8,41 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 divContent2">
-            <% notaDB %>
-            <h1 class="text-center mb-3">Detalles de Nota</h1>
-            <h4>Numero de Nota: <%- notaDB.numero %></h4><br>
-            <h4>Fecha Recibida: <%- notaDB.fechaCreacion %></h4><br>
-            <h4>Tipo de Nota: <%- notaDB.tipoNota %></h4><br>
-            <h4>Procedencia: <%- notaDB.procedencia %></h4><br>
-            <h4>Descripcion: <%- notaDB.descripcion %></h4><br>
+            <% if(tipoNota == 'E') { %>
+            <h3 class="text-center mb-5">Detalle de Nota Enviada No.<%- notaDB.numero %></h3>
+            <% } %>
+            <% if(tipoNota == 'R') { %>
+            <h3 class="text-center mb-5">Detalle de Nota Recibida No.<%- notaDB.numero %></h3>
+            <% } %>
+
+            <p> Numero de Nota: <span class="textStyleDetalle"> <%- notaDB.numero %></span></p>
+            <p> Fecha Recibida: <span class="textStyleDetalle"><%- notaDB.fechaCreacion %></span></p>
+            <p> Tipo de Nota: <span class="textStyleDetalle"><%- notaDB.tipoNota %></span></p>
+            <% if(tipoNota == 'E') { %>
+            <p> Destino: <span class="textStyleDetalle"><%- notaDB.procedencia %></span></p>
+            <% } %>
+            <% if(tipoNota == 'R') { %>
+            <p> Procedencia: <span class="textStyleDetalle"><%- notaDB.procedencia %></span></p>
+            <% } %>
+            <p> Descripcion: <span class="textStyleDetalle"><%- notaDB.descripcion %></span></p>
+
+            <br>
+            <h4 class="mb-4">Imagenes de la Nota</h4>
+
             <div class="row">
                 <% for(var imagenNotas of imagenNotasDB) { %>
                 <div class="col-md-4">
-                    <img id="im" src="\rrpp\<%- imagenNotas.imagen %>" alt="" class="imagenNotas"><br>
-                    <label for="im"><a href="http://localhost:3000/rrpp/<%- imagenNotas.imagen %>">VER
-                            IMAGEN</a></label>
+                    <!-- <img id="im" src="\rrpp\<%- imagenNotas.imagen %>" alt="" class="imagenNotas"><br>
+                    <a href="http://localhost:3000/rrpp/<%- imagenNotas.imagen %>">VER
+                        IMAGEN</a> -->
+
+                    <a href="http://localhost:3000/rrpp/<%- imagenNotas.imagen %>" class="imagenNotas"><img id="im"
+                            src="\rrpp\<%- imagenNotas.imagen %>" alt="CLICK PARA VER IMAGEN"
+                            class="imagenNotas"><br></a>
+                    <br>
+                    <br>
                 </div>
+
                 <% } %>
             </div>
         </div>

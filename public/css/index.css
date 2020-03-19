@@ -102,3 +102,10 @@ body {
 div.dataTables_length {
     display: none;
 }
+
+/* Estilo del texto del deatlle de nota */
+.textStyleDetalle {
+    font-size: 15px;
+    color: black;
+    font-weight: bolder;
+}

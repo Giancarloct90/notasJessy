@@ -11,7 +11,6 @@
     </script>
     <% flag = false %>
     <% } %>
-    <!-- <% flag = false %> -->
 
     <!-- INICIO DE PAGINA -->
     <div class="row">
@@ -110,7 +109,9 @@
                                 <td><%- notasRecibidas.tipoNota %></td>
                                 <td><%- notasRecibidas.procedencia %></td>
                                 <td><%- acortarDescripcion(notasRecibidas.descripcion, 50) %></td>
-                                <td><a href="/detalleNotaRecibida/<%- notasRecibidas.id %>">VER DETALLE</a></td>
+                                <td><a href="/detalleNotaRecibida?id=<%- notasRecibidas.id %>&tipo=R">VER DETALLE</a>
+                                </td>
+
                             </tr>
                             <% } %>
                         </tbody>

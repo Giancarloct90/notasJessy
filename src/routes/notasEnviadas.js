@@ -16,6 +16,10 @@ app.get('/notasEnviadas', async (req, res) => {
     let sess = req.session,
         flag, notasEnviadasDB;
     try {
+        if (sess.notaSaved) {
+            flag = true
+        }
+        sess.destroy();
         res.render('notasEnviadas', {
             flag: flag,
             msj1: 'Guardado! ',

@@ -4,9 +4,16 @@
     <!-- TITULO -->
     <h1 class="text-center mb-4">Notas Enviadas</h1>
 
+    <!-- NOTIFICACIONES -->
+    <% if(flag === true) { %>
+    <% console.log(flag) %>
+    <script>
+        notify('<%- msj1 %>', '<%- msj2 %>');
+    </script>
+    <% } %>
+
     <!-- INICIO DE PAGINA -->
     <div class="row">
-
         <!-- FORM -->
         <div class="col-md-4">
             <div class="divContent3">
@@ -101,7 +108,8 @@
                                 <td><%- notasEnviadas.tipoNota %></td>
                                 <td><%- notasEnviadas.procedencia %></td>
                                 <td><%- acortarDescripcion(notasEnviadas.descripcion, 50) %></td>
-                                <td><a href="/detalleNotaRecibida/<%- notasEnviadas.id %>">VER DETALLE</a></td>
+                                <td><a href="/detalleNotaRecibida?id=<%- notasEnviadas.id %>&tipo=E">VER DETALLE</a>
+                                </td>
                             </tr>
                             <% } %>
                         </tbody>

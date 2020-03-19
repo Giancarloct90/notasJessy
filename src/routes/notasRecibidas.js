@@ -100,19 +100,18 @@ app.post('/contador', async (req, res) => {
 });
 
 // GET DETAILS ONE NOTE
-app.get('/detalleNotaRecibida', (req, res) => {
-    let sess = req.session;
-    res.render('detalleNotaRecibida.ejs', {
-        notaDB: sess.notadb,
-        imagenNotasDB: sess.imag
-    });
-});
+// app.get('/detalleNotaRecibida', (req, res) => {
+//     let sess = req.session;
+//     res.render('detalleNotaRecibida.ejs', {
+//         notaDB: sess.notadb,
+//         imagenNotasDB: sess.imag
+//     });
+// });
 
 // GET ONE NOTE
-app.get('/detalleNotaRecibida/:id', async (req, res) => {
-    let id = req.params.id,
+app.get('/detalleNotaRecibida', async (req, res) => {
+    let id = req.query.id,
         imagenNotasDB, notaDB;
-    let sess = req.session;
     try {
         notaDB = await Notas.findById(id);
         try {
@@ -120,11 +119,13 @@ app.get('/detalleNotaRecibida/:id', async (req, res) => {
                 idNota: notaDB.id,
                 disponible: true,
             });
-            sess.notadb = notaDB;
-            sess.imag = imagenNotasDB;
-            res.redirect('/detalleNotaRecibida');
+            res.render('detalleNotaRecibida', {
+                notaDB: notaDB,
+                imagenNotasDB: imagenNotasDB,
+                tipoNota: req.query.tipo
+            });
         } catch (e) {
-            console.log('error en la obtencion de imagenes', e);
+            console.log('error al obetner las imagenes', e);
         }
     } catch (e) {
         console.log('error obtneiendo la informacion de la nota', e);
