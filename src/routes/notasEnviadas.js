@@ -46,8 +46,10 @@ app.post('/notasEnviadas', async (req, res) => {
     try {
         let nota = new Notas();
         nota.fechaCreacion = getFecha().fechaTotal;
-        nota.mes = getFecha().mes;
-        nota.anio = getFecha().anio;
+        // nota.mes = getFecha().mes;
+        nota.mes = 'Diciembre';
+        nota.anio = '2021';
+        // nota.anio = getFecha().anio;
         nota.tipoNota = body.tipoNota;
         nota.numero = body.contador;
         nota.procedencia = body.fueDirDep;

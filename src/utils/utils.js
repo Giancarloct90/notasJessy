@@ -66,11 +66,95 @@ const getContadorNotas = async (tipo) => {
     }
 };
 
+// GET MOUNT OF THE NOTES
+// const getMonthNotes = async (tipoNota) => {
+//     let meses = [];
+//     let mesesF = [];
+//     let mesesFF = [];
+//     let total = {};
+//     let i = 0;
+//     let arrAnios = await getAniosReport(tipoNota);
+//     let notasDB;
+//     arrAnios.map(async (anio, index) => {
+//         notasDB = await Notas.find({
+//             tipo: tipoNota,
+//             disponible: true,
+//             anio: anio
+//         }).select({
+//             "mes": 1
+//         });
+//         // console.log(notasDB);
+//         notasDB.map(async (nota) => await meses.push(nota.mes));
+//         total.anio = anio;
+//         new Set(meses).forEach((mes) => {
+//             total[`mes${i}`] = mes;
+//             i++
+//         });
+//         mesesF.push(total);
+//         i = 0;
+//         total = {};
+//         meses = [];
+//         console.log(mesesF);
+//     });
+//     // console.log('H', mesesF);
+// }
+const getMonthNotes = async (tipoNota) => {
+    let meses = [];
+    let mesesF = [];
+    let mesesFF = [];
+    let total = {};
+    let i = 0;
+    let arrAnios = await getAniosReport(tipoNota);
+    // console.log(arrAnios);
+    let notasDB;
+    const final = arrAnios.map(async (anio, index) => {
+        notasDB = await Notas.find({
+            tipo: tipoNota,
+            disponible: true,
+            anio: anio
+        }).select({
+            "mes": 1
+        });
+        // console.log(notasDB);
+        notasDB.map(async (nota) => await meses.push(nota.mes));
+        total.anio = anio;
+        new Set(meses).forEach((mes) => {
+            total[`mes${i}`] = mes;
+            i++
+        });
+        mesesF.push(total);
+        i = 0;
+        total = {};
+        meses = [];
+        console.log(mesesF);
+        return mesesF;
+    });
+    // const results = await Promise.all(final);
+    // console.log(results);
+
+}
+
+// GET ANIOS TO REPORTS
+const getAniosReport = async (tipoNota) => {
+    let aniosF = [];
+    let anios = [];
+    const notasDB = await Notas.find({
+        tipo: tipoNota,
+        disponible: true
+    }).select('anio');
+    notasDB.map(nota => anios.push(nota.anio));
+    new Set(anios).forEach(anio => aniosF.push(anio));
+    // console.log(aniosF);
+    return aniosF;
+};
+
 // EXPORTS 
 module.exports = {
     getFecha,
     getAllNotas,
     getTipoNotas,
     getFueDirDep,
-    getContadorNotas
+    getContadorNotas,
+    getMonthNotes,
+    getAniosReport
 };
