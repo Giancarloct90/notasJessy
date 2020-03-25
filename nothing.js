@@ -27,3 +27,30 @@ let nombreDireccionPDF = path.join(__dirname, `../../public/rrpp/reportes/${new 
 pdfdoc.pipe(fs.createWriteStream(nombreDireccionPDF));
 pdfdoc.end();
 res.send('create');
+
+
+/////////////////
+
+// // FECHA  
+// {
+//     text: `Fecha: ${notas.fechaCreacion}`,
+//     fontSize: 11
+// },
+
+// // TIPO NOTA
+// {
+//     text: `Tipo Nota: ${notas.tipoNota}`,
+//     fontSize: 11
+// },
+
+// // PROCEDENCIA
+// {
+//     text: `${procedencia}: ${notas.procedencia}`,
+//     fontSize: 11
+// },
+
+// // NUMERO DE NOTA
+// {
+//     text: `No. Nota: ${notas.numero}`,
+//     fontSize: 11
+// },

@@ -219,7 +219,7 @@ const getNotesAnioMes = async (anio, mes, tipo) => {
 };
 
 // GENERATE DATA FOR PDF
-const generateDadaForPdf = (notasDB, tipo1) => {
+const generateDadaForPdf = (notasDB, tipo1, anio, mes) => {
     // let tipo, notasDB;
     let tipo, procedencia, tipo2;
     let contentF = [];
@@ -234,73 +234,151 @@ const generateDadaForPdf = (notasDB, tipo1) => {
         tipo = 'ENVIADAS';
         tipo2 = 'Enviada';
     }
+
+    // HEADER REPORT
     contentF.push(
+
         // TITULO
         {
-            text: `\nREPORTE DE NOTAS ${tipo}\n\n`,
+            text: `REPORTE DE NOTAS ${tipo}\n\n`,
             style: 'header',
             fontSize: 16,
             alignment: 'center'
         },
+
+        // FECHA
+        {
+            text: [{
+                    text: `Año: `,
+                    fontSize: 11,
+                    bold: true
+                },
+                {
+                    text: ` ${anio}     `,
+                    fontSize: 11,
+                },
+                {
+                    text: `Mes: `,
+                    fontSize: 11,
+                    bold: true
+                },
+                {
+                    text: ` ${mes}`,
+                    fontSize: 11,
+                },
+            ],
+            alignment: 'left'
+        },
+
+        // CANTIDAD DE NOTAS
+        {
+            text: [{
+                    text: `Cantidad de Notas: `,
+                    fontSize: 11,
+                    bold: true
+                },
+                {
+                    text: ` ${notasDB.length}`,
+                    fontSize: 11,
+                },
+            ],
+            alignment: 'left'
+        },
+
+        // LINEA DEL FIN
+        {
+            text: `_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n`,
+            fontSize: 11
+        }
+
     );
-    notasDB.map(async notas => {
+
+    // BODY REPORT
+    notasDB.map(notas => {
         contentF.push(
-
-            // FECHA  
+            // TABLE
             {
-                text: `Fecha: ${notas.fechaCreacion}`,
-                fontSize: 11
-            },
-
-            // TIPO NOTA
-            {
-                text: `Tipo Nota: ${notas.tipoNota}`,
-                fontSize: 11
-            },
-
-            // PROCEDENCIA
-            {
-                text: `${procedencia}: ${notas.procedencia}`,
-                fontSize: 11
-            },
-
-            // NUMERO DE NOTA
-            {
-                text: `No. Nota: ${notas.numero}`,
-                fontSize: 11
-            },
-
-            // RECIVIDA O ENVIADA
-            {
-                text: `${tipo2}`,
-                fontSize: 11
+                layout: 'noBorders',
+                table: {
+                    body: [
+                        [{
+                            text: [{
+                                    text: `Fecha ${tipo2}:`,
+                                    fontSize: 11,
+                                    bold: true
+                                },
+                                {
+                                    text: ` ${notas.fechaCreacion}          `,
+                                    fontSize: 11,
+                                },
+                            ],
+                            alignment: 'left'
+                        }, {
+                            text: [{
+                                    text: `No. Nota: `,
+                                    fontSize: 11,
+                                    bold: true
+                                },
+                                {
+                                    text: ` ${notas.numero}     `,
+                                    fontSize: 11,
+                                },
+                            ],
+                            alignment: 'left'
+                        }],
+                        [{
+                            text: [{
+                                    text: `${procedencia}: `,
+                                    fontSize: 11,
+                                    bold: true
+                                },
+                                {
+                                    text: ` ${notas.procedencia}     `,
+                                    fontSize: 11,
+                                },
+                            ],
+                            alignment: 'left'
+                        }, {
+                            text: [{
+                                    text: `Asunto: `,
+                                    fontSize: 11,
+                                    bold: true
+                                },
+                                {
+                                    text: ` ${notas.tipoNota}     `,
+                                    fontSize: 11,
+                                },
+                            ],
+                            alignment: 'left'
+                        }]
+                    ]
+                }
             },
 
             // DESCRIPTION
             {
-                text: `${notas.descripcion}`,
-                fontSize: 11,
+                text: [{
+                        text: `Descripcion: `,
+                        fontSize: 11,
+                        bold: true
+                    },
+                    {
+                        text: ` ${notas.descripcion}`,
+                        fontSize: 11,
+                    },
+                ],
                 alignment: 'justify'
             },
 
             // LINEA DEL FIN
             {
-                text: `_____________________________________________________________________`,
+                text: `______________________________________________________________________________________________________\n\n`,
                 fontSize: 11
             }
         );
     });
-    console.log(contentF);
-    content = [
-        // TITULO
-        {
-            text: `\nREPORTE DE NOTAS ${tipo}\n\n`,
-            style: 'header',
-            fontSize: 16,
-            alignment: 'center'
-        },
-    ]
 
+    return contentF;
 };
 
 // EXPORTS

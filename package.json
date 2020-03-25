@@ -18,7 +18,8 @@
     "express-session": "^1.17.0",
     "mongoose": "^5.9.3",
     "multer": "^1.4.2",
-    "pdfmake": "^0.1.65"
+    "pdfmake": "^0.1.65",
+    "roboto-font": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

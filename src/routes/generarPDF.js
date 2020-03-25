@@ -10,11 +10,12 @@ const {
 
 // GENERATE PDF DOCUMENTS
 app.get('/generarPDF', async (req, res) => {
-    let tipo, notasDB;
+    let tipo, notasDB, reporteNotas = {};
+    let data;
 
     try {
         notasDB = await getNotesAnioMes(req.query.anio, req.query.mes, req.query.tipo);
-        generateDadaForPdf(notasDB, req.query.tipo);
+        data = generateDadaForPdf(notasDB, req.query.tipo, req.query.anio, req.query.mes);
     } catch (e) {
         console.log('Error tratando de obteenr la informacion de las Notas', e);
     }
@@ -27,24 +28,30 @@ app.get('/generarPDF', async (req, res) => {
             bolditalics: 'node_modules/roboto-font/fonts/Roboto/roboto-bolditalic-webfont.ttf'
         }
     };
-    var data = {
-        content: [
-            // TITULO
-            {
-                text: `\nREPORTE DE NOTAS ${tipo}\n\n`,
-                style: 'header',
-                fontSize: 16,
-                alignment: 'center'
-            },
-        ]
+
+    reporteNotas = {
+        content: data
     }
 
     let printer = new pdfmake(fonts);
-    let pdfdoc = printer.createPdfKitDocument(data);
+    let pdfdoc = printer.createPdfKitDocument(reporteNotas);
     let nombreDireccionPDF = path.join(__dirname, `../../public/rrpp/reportes/${new Date().getTime()}.pdf`);
+    let file = fs.createWriteStream(nombreDireccionPDF);
     pdfdoc.pipe(fs.createWriteStream(nombreDireccionPDF));
+    pdfdoc.on('end', () => {
+        // console.log('Created');
+        res.sendFile(`${nombreDireccionPDF}`);
+        // res.download(`${nombreDireccionPDF}`);
+    });
     pdfdoc.end();
-    res.send('create');
+    // pdfdoc.pipe(res.sendFile(`${nombreDireccionPDF}`));
+    // file.end();
+    // file.on("finish", () => {
+    //     // console.log('End');
+    //     res.sendFile(`${nombreDireccionPDF}`);
+    // });
+    // file.on("error", e => console.loge);
+    // // res.send('created');
 });
 
 module.exports = app;
