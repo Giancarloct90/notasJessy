@@ -1,27 +1,14 @@
 const express = require('express');
 const app = express();
 const {
-    getFecha,
-    getAllNotas,
-    getTipoNotas,
-    getFueDirDep,
-    getContadorNotas,
-    getMonthNotes,
-    getAniosReport
+    getMonthNotes
 } = require('../utils/utils');
-
 app.get('/reportes', async (req, res) => {
-    await getMonthNotes('E');
-    res.send('ok');
-    //const arr = await getMonthNotes('E');
-    // res.render('reportes', {
-    //     meses: arr.mesesF,
-    //     anios: arr.aniosF
-    // });
+    res.render('reportes', {
+        notasAniosMesesEnviadasDB: await getMonthNotes('E'),
+        notasAniosMesesRecibidasDB: await getMonthNotes('R')
+    });
+
 });
-
-
-
-
 
 module.exports = app;

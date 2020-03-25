@@ -1,4 +1,12 @@
 <%- layout('layouts/main') %>
+<!-- FUNCTIONFOR TO KNOW THE SIZE OF A OBJECT -->
+<% Object.size = function(obj) { %>
+<%     var size = 0, key; %>
+<%     for (key in obj) { %>
+<%         if (obj.hasOwnProperty(key)) size++; %>
+<%     } %>
+<%     return size; %>
+<% }; %>
 
 <div class="containter-fluid">
     <!-- TITULO -->
@@ -6,14 +14,32 @@
     <div class="row">
         <div class="col-md-6">
             <div class="divContent3">
-                <h4 class="text-center">Reporte de Notas Recibidas</h4>
+                <h4 class="text-center mb-4">Reporte de Notas Recibidas</h4>
+                <% notasAniosMesesRecibidasDB.map((notasAniosMeses,index) => { %>
+                <span class="txtDetalleNotas"> <%- notasAniosMeses.anio %> </span><br>
+                <% for(let i=0; i < Object.size(notasAniosMeses)-1; i++) {  %>
+                <span class="btnDetalleNotas"><a
+                        href="/generarPDF?tipo=R&mes=<%- notasAniosMeses[`mes${i}`] %>&anio=<%- notasAniosMeses.anio %>"
+                        class="btn btn-dark btnDetalleNotas">Generar el PDF
+                        <%- notasAniosMeses[`mes${i}`] %></a> </span>
+                <% } %>
+                <hr>
+                <% }); %>
             </div>
         </div>
         <div class="col-md-6">
             <div class="divContent3">
-                <h4 class="text-center">Reporte de Notas Enviadas</h4>
-                <% meses.map((mes) => { %>
-                <span> <a href=""><%- mes %></a> </span>
+                <h4 class="text-center mb-4">Reporte de Notas Enviadas</h4>
+
+                <% notasAniosMesesEnviadasDB.map((notasAniosMeses,index) => { %>
+                <span class="txtDetalleNotas"> <%- notasAniosMeses.anio %> </span><br>
+                <% for(let i=0; i < Object.size(notasAniosMeses)-1; i++) {  %>
+                <span class="btnDetalleNotas"> <a
+                        href="/generarPDF?tipo=E&mes=<%- notasAniosMeses[`mes${i}`] %>&anio=<%- notasAniosMeses.anio %>"
+                        class="btn btn-dark btnDetalleNotas">Generar el PDF
+                        <%- notasAniosMeses[`mes${i}`] %></a> </span>
+                <% } %>
+                <hr>
                 <% }); %>
             </div>
         </div>

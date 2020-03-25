@@ -5,6 +5,10 @@ const path = require('path');
 const engine = require('ejs-mate');
 const session = require('express-session');
 const multer = require('multer');
+const {
+    getFecha,
+} = require('./utils/utils');
+
 
 // SETTING
 // SET VIEW ENGINE
@@ -30,8 +34,9 @@ app.use(session({
 }));
 // MULTER FOR IMAGES/FILES
 // destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
+// console.log(getFecha().anio, getFecha().mes);
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, `../public/rrpp/`),
+    destination: path.join(__dirname, `../public/rrpp/Imagenes/`),
     filename: (req, file, fnCallback) => {
         fnCallback(null, `${new Date().getMonth() + 1}${new Date().getFullYear()}_${new Date().getTime() + path.extname(file.originalname)}`);
     }
