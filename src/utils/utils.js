@@ -246,25 +246,40 @@ const generateDadaForPdf = (notasDB, tipo1, anio, mes) => {
             alignment: 'center'
         },
 
-        // FECHA
+        // FECHA ACTUUAL
+        {
+            text: [{
+                    text: `Fecha en la que genero el reporte: `,
+                    fontSize: 13,
+                    bold: true
+                },
+                {
+                    text: ` ${getFecha().fechaTotal}`,
+                    fontSize: 13,
+                },
+            ],
+            alignment: 'left'
+        },
+
+        // FECHAS DE NOTAS
         {
             text: [{
                     text: `Año: `,
-                    fontSize: 11,
+                    fontSize: 13,
                     bold: true
                 },
                 {
                     text: ` ${anio}     `,
-                    fontSize: 11,
+                    fontSize: 13,
                 },
                 {
                     text: `Mes: `,
-                    fontSize: 11,
+                    fontSize: 13,
                     bold: true
                 },
                 {
                     text: ` ${mes}`,
-                    fontSize: 11,
+                    fontSize: 13,
                 },
             ],
             alignment: 'left'
@@ -274,12 +289,12 @@ const generateDadaForPdf = (notasDB, tipo1, anio, mes) => {
         {
             text: [{
                     text: `Cantidad de Notas: `,
-                    fontSize: 11,
+                    fontSize: 13,
                     bold: true
                 },
                 {
                     text: ` ${notasDB.length}`,
-                    fontSize: 11,
+                    fontSize: 13,
                 },
             ],
             alignment: 'left'

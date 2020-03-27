@@ -30,28 +30,26 @@ app.get('/generarPDF', async (req, res) => {
     };
 
     reporteNotas = {
+        pageSize: 'A4',
+        footer: (currentPage, pageCount) => {
+            return {
+                text: `Pagina ${currentPage.toString()} de ${pageCount.toString()}`,
+                alignment: 'center',
+                fontSize: 11
+            }
+        },
         content: data
     }
-
+    var tempFile;
     let printer = new pdfmake(fonts);
     let pdfdoc = printer.createPdfKitDocument(reporteNotas);
     let nombreDireccionPDF = path.join(__dirname, `../../public/rrpp/reportes/${new Date().getTime()}.pdf`);
-    let file = fs.createWriteStream(nombreDireccionPDF);
-    pdfdoc.pipe(fs.createWriteStream(nombreDireccionPDF));
-    pdfdoc.on('end', () => {
-        // console.log('Created');
-        res.sendFile(`${nombreDireccionPDF}`);
-        // res.download(`${nombreDireccionPDF}`);
-    });
+    pdfdoc.pipe(tempFile = fs.createWriteStream(nombreDireccionPDF));
     pdfdoc.end();
-    // pdfdoc.pipe(res.sendFile(`${nombreDireccionPDF}`));
-    // file.end();
-    // file.on("finish", () => {
-    //     // console.log('End');
-    //     res.sendFile(`${nombreDireccionPDF}`);
-    // });
-    // file.on("error", e => console.loge);
-    // // res.send('created');
-});
+    tempFile.on('finish', async function () {
+        // do send PDF file 
+        res.sendFile(nombreDireccionPDF);
+    });
 
+});
 module.exports = app;

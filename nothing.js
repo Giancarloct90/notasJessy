@@ -54,3 +54,24 @@ res.send('create');
 //     text: `No. Nota: ${notas.numero}`,
 //     fontSize: 11
 // },
+
+const createPDF = async (reporteNotas, fonts) => {
+            return new Promise((resolve, reject) => {
+                let printer = new pdfmake(fonts);
+                let pdfdoc = printer.createPdfKitDocument(reporteNotas);
+                let nombreDireccionPDF = path.join(__dirname, `../../public/rrpp/reportes/${new Date().getTime()}.pdf`);
+                pdfdoc.pipe(fs.createWriteStream(nombreDireccionPDF));
+                pdfdoc.on('end', () => {
+                    console.log('Created');
+                    resolve(nombreDireccionPDF);
+                    // res.sendFile(`${nombreDireccionPDF}`);
+                    // res.download(`${nombreDireccionPDF}`);
+                });
+                pdfdoc.on('error', () => {
+                    console.log('Error1');
+                    // res.sendFile(`${nombreDireccionPDF}`);
+                    // res.download(`${nombreDireccionPDF}`);
+                });
+
+                pdfdoc.end();
+            });
