@@ -123,3 +123,20 @@ div.dataTables_length {
     color: black;
     font-weight: bolder;
 }
+
+
+/* DIV FOR LOGIN  */
+.divLogin {
+    width: auto;
+    height: auto;
+    background-color: red;
+
+    margin-top: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+
+
+/* ******************************************/
