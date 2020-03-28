@@ -19,3 +19,14 @@ Content-Type: application/json
     "contador": "1"
 }
 ###
+
+POST http://localhost:3000/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Jessy Joy",
+    "nombreUsuario": "jJoy",
+    "password": "123456"
+}
+
+###

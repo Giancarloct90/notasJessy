@@ -138,5 +138,10 @@ div.dataTables_length {
 }
 
 
+.pt {
+    display: block;
+    margin: auto;
+}
+
 
 /* ******************************************/

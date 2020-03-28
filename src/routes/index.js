@@ -8,5 +8,7 @@ app.use(require('./home'));
 app.use(require('./tipoNota'));
 app.use(require('./reportes'));
 app.use(require('./generarPDF'));
+app.use(require('./login'));
+app.use(require('./usuarios'));
 
 module.exports = app;
