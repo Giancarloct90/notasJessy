@@ -174,48 +174,65 @@ const getFullArrray = async (anio, mesesf) => {
 
 //GET MONTH WITHPUT DUPLICATE
 const getMonthWithDuplicate = async notasDB => {
-    let meses = notasDB.map((nota) => {
-        return nota.mes
-    });
-    return mesesf = meses.filter(function (item, pos) {
-        return meses.indexOf(item) == pos;
-    })
+    try {
+        let meses = notasDB.map((nota) => {
+            return nota.mes
+        });
+        return mesesf = meses.filter(function (item, pos) {
+            return meses.indexOf(item) == pos;
+        })
+    } catch (e) {
+        console.log('//GET MONTH WITHPUT DUPLICATE', e);
+    }
 };
 
 // GET NOTES SEGUN ANIO AND TYPE
 const getNotes = async (tipoNota, anio) => {
-    return await Notas.find({
-        tipo: tipoNota,
-        disponible: true,
-        anio: anio
-    }).select({
-        "mes": 1
-    });
+    try {
+        return await Notas.find({
+            tipo: tipoNota,
+            disponible: true,
+            anio: anio
+        }).select({
+            "mes": 1
+        });
+    } catch (e) {
+        console.log('// GET NOTES SEGUN ANIO AND TYPE', e);
+    }
 };
 
 // GET ANIOS TO REPORTS
 const getAniosReport = async (tipoNota) => {
-    let aniosF = [];
-    let anios = [];
-    const notasDB = await Notas.find({
-        tipo: tipoNota,
-        disponible: true
-    }).select('anio');
-    notasDB.map(nota => anios.push(nota.anio));
-    new Set(anios).forEach(anio => aniosF.push(anio));
-    // console.log(aniosF);
-    return aniosF;
+    try {
+        let aniosF = [];
+        let anios = [];
+        const notasDB = await Notas.find({
+            tipo: tipoNota,
+            disponible: true
+        }).select('anio');
+        notasDB.map(nota => anios.push(nota.anio));
+        new Set(anios).forEach(anio => aniosF.push(anio));
+        // console.log(aniosF);
+        return aniosF;
+
+    } catch (e) {
+        console.log('// GET ANIOS TO REPORTS', e);
+    }
 };
 
 // GET NOTES SEGUN ANIO Y MES
 const getNotesAnioMes = async (anio, mes, tipo) => {
-    const notasDB = await Notas.find({
-        anio: anio,
-        mes: mes,
-        disponible: true,
-        tipo: tipo
-    });
-    return notasDB;
+    try {
+        const notasDB = await Notas.find({
+            anio: anio,
+            mes: mes,
+            disponible: true,
+            tipo: tipo
+        });
+        return notasDB;
+    } catch (e) {
+        console.log('// GET NOTES SEGUN ANIO Y MES', e);
+    }
 };
 
 // GENERATE DATA FOR PDF
