@@ -8,11 +8,14 @@ const {
     getAllNotas,
     getTipoNotas,
     getFueDirDep,
-    getContadorNotas
+    getContadorNotas,
+    isAuth
 } = require('../utils/utils');
 
+
+
 // GET TO VIEW THE PAGE OF INFORMATION
-app.get('/notasRecibidas', async (req, res) => {
+app.get('/notasRecibidas', isAuth, async (req, res) => {
     let sess = req.session,
         flag;
     try {
@@ -34,7 +37,7 @@ app.get('/notasRecibidas', async (req, res) => {
 });
 
 // POST TO INSERT DATA 
-app.post('/notasRecibidas', async (req, res) => {
+app.post('/notasRecibidas', isAuth, async (req, res) => {
     let body = req.body,
         notasRecibidasDB, notaDB,
         files = req.files,
@@ -85,7 +88,7 @@ app.post('/notasRecibidas', async (req, res) => {
 });
 
 // POST INSERT CONTADOR NOTAS
-app.post('/contador', async (req, res) => {
+app.post('/contador', isAuth, async (req, res) => {
     try {
         let contador = req.body;
         let contadorDB = new ContadorNotas();
@@ -109,7 +112,7 @@ app.post('/contador', async (req, res) => {
 // });
 
 // GET ONE NOTE
-app.get('/detalleNotaRecibida', async (req, res) => {
+app.get('/detalleNotaRecibida', isAuth, async (req, res) => {
     let id = req.query.id,
         imagenNotasDB, notaDB;
     try {

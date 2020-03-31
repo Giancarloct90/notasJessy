@@ -1,14 +1,12 @@
 const express = require('express');
 const app = express();
-const exphbs = require('express-handlebars');
 const path = require('path');
 const engine = require('ejs-mate');
 const session = require('express-session');
 const multer = require('multer');
-const {
-    getFecha,
-} = require('./utils/utils');
+const passport = require('passport');
 
+require('../passport/local-auth');
 
 // SETTING
 // SET VIEW ENGINE
@@ -30,8 +28,15 @@ app.use(express.json());
 app.use(session({
     secret: 'XAXAXAXA',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: false,
+        maxAge: 60000
+    }
 }));
+//PASSPORT
+app.use(passport.initialize());
+app.use(passport.session());
 // MULTER FOR IMAGES/FILES
 // destination: path.join(__dirname, `../public/rrpp/${new Date().getFullYear()}/${new Date().getMonth() + 1}/`),
 // console.log(getFecha().anio, getFecha().mes);

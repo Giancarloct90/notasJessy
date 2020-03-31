@@ -8,11 +8,14 @@ const {
     getAllNotas,
     getTipoNotas,
     getFueDirDep,
-    getContadorNotas
+    getContadorNotas,
+    isAuth
 } = require('../utils/utils');
 
+
+
 // GET ALL INFORMATION TO FILL FIRST PAGE 
-app.get('/notasEnviadas', async (req, res) => {
+app.get('/notasEnviadas', isAuth, async (req, res) => {
     let sess = req.session,
         flag, notasEnviadasDB;
     try {
@@ -36,7 +39,7 @@ app.get('/notasEnviadas', async (req, res) => {
 });
 
 // POST INSERT NEW NOTA ENVIADA
-app.post('/notasEnviadas', async (req, res) => {
+app.post('/notasEnviadas', isAuth, async (req, res) => {
     let body = req.body,
         imagenNotas = new ImagenNotas(),
         arr = [],

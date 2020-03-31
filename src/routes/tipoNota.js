@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const TipoNota = require('../models/tipoNota');
 // const session = require('express-session');
+const {
+    isAuth
+} = require('../utils/utils');
+
+
 
 const getTipoNota = async () => {
     try {
@@ -15,7 +20,7 @@ const getTipoNota = async () => {
 };
 
 // GET, VIEW THE VIEW
-app.get('/tipoNotas', async (req, res) => {
+app.get('/tipoNotas', isAuth, async (req, res) => {
     let sess = req.session;
     let flag, msj1, msj2;
     if (sess.notaDelete) {
@@ -30,7 +35,7 @@ app.get('/tipoNotas', async (req, res) => {
 });
 
 // POST, TO INSERT THE NOTE
-app.post('/tipoNotaI', async (req, res) => {
+app.post('/tipoNotaI', isAuth, async (req, res) => {
     let body = req.body;
     let flag, msj1, msj2;
     try {
@@ -54,7 +59,7 @@ app.post('/tipoNotaI', async (req, res) => {
 });
 
 // DELETE DATA
-app.get('/tipoNotaD/:id', async (req, res) => {
+app.get('/tipoNotaD/:id', isAuth, async (req, res) => {
     let id = req.params.id
     let sess = req.session;
     try {

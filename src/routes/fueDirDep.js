@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const FueDirDep = require('../models/fueDirDep');
+const {
+    isAuth
+} = require('../utils/utils');
 
 
 // GET ALL DATA
@@ -16,7 +19,7 @@ let getfueDirDep = async () => {
 };
 
 // GET SHOW DATA
-app.get('/datosMaestros', async (req, res) => {
+app.get('/datosMaestros', isAuth, async (req, res) => {
     let sess = req.session;
     let flag, msj1, msj2;
     if (sess.FueDirDep) {
@@ -31,7 +34,7 @@ app.get('/datosMaestros', async (req, res) => {
 });
 
 // POST TO INSERT THE INFO
-app.post('/nuevoDatoMaestro', async (req, res) => {
+app.post('/nuevoDatoMaestro', isAuth, async (req, res) => {
     let body = req.body;
     try {
         const fueDirDepDB = new FueDirDep();
@@ -55,7 +58,7 @@ app.post('/nuevoDatoMaestro', async (req, res) => {
 });
 
 // DELETE DATA
-app.get('/borrarDatoMaestro/:id', async (req, res) => {
+app.get('/borrarDatoMaestro/:id', isAuth, async (req, res) => {
     let id = req.params.id;
     let sess = req.session;
     try {

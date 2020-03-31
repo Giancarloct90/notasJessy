@@ -396,6 +396,15 @@ const generateDadaForPdf = (notasDB, tipo1, anio, mes) => {
     return contentF;
 };
 
+// isAuth
+function isAuth(req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 // EXPORTS
 module.exports = {
     getFecha,
@@ -406,5 +415,6 @@ module.exports = {
     getMonthNotes,
     getAniosReport,
     getNotesAnioMes,
-    generateDadaForPdf
+    generateDadaForPdf,
+    isAuth
 };
