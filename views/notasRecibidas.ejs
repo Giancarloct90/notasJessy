@@ -8,12 +8,9 @@
     <h1 class="text-center mb-4">Notas Recibidas</h1>
 
     <!-- NOTIFICACIONES -->
-    <% if(flag == true) { %>
     <script>
-        notify('<%- msj1 %>', '<%- msj2 %>');
+        notify('<%- success_msg %>');
     </script>
-    <% flag = false %>
-    <% } %>
 
     <!-- INICIO DE PAGINA -->
     <div class="row">
@@ -112,7 +109,8 @@
                                 <td><%- notasRecibidas.tipoNota %></td>
                                 <td><%- notasRecibidas.procedencia %></td>
                                 <td><%- acortarDescripcion(notasRecibidas.descripcion, 50) %></td>
-                                <td><a href="/detalleNotaRecibida?id=<%- notasRecibidas.id %>&tipo=R">VER DETALLE</a>
+                                <td><a class="btn btn-success"
+                                        href="/detalleNotaRecibida?id=<%- notasRecibidas.id %>&tipo=R">VER DETALLE</a>
                                 </td>
 
                             </tr>

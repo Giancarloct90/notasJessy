@@ -16,17 +16,9 @@ const {
 
 // GET ALL INFORMATION TO FILL FIRST PAGE 
 app.get('/notasEnviadas', isAuth, async (req, res) => {
-    let sess = req.session,
-        flag, notasEnviadasDB;
+
     try {
-        if (sess.notaSaved) {
-            flag = true
-        }
-        sess.destroy();
         res.render('notasEnviadas', {
-            flag: flag,
-            msj1: 'Guardado! ',
-            msj2: 'La informacion se guardo con exito.',
             notasEnviadasDB: await getAllNotas('E'),
             contador: await getContadorNotas('E'),
             tipoNotaDB: await getTipoNotas(),
@@ -44,8 +36,7 @@ app.post('/notasEnviadas', isAuth, async (req, res) => {
         imagenNotas = new ImagenNotas(),
         arr = [],
         files = req.files,
-        count = parseInt(body.contador) + 1,
-        sess = req.session;;
+        count = parseInt(body.contador) + 1;
     try {
         let nota = new Notas();
         nota.fechaCreacion = getFecha().fechaTotal;
@@ -77,7 +68,7 @@ app.post('/notasEnviadas', isAuth, async (req, res) => {
                     });
                 });
                 await imagenNotas.collection.insertMany(arr);
-                sess.notaSaved = true;
+                req.flash('success_msg', 'Nota Agregada Correctamente')
                 res.redirect('/notasEnviadas');
             } catch (e) {
                 console.log('Error en guardar la img', e)

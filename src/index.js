@@ -5,6 +5,7 @@ const engine = require('ejs-mate');
 const session = require('express-session');
 const multer = require('multer');
 const passport = require('passport');
+const flash = require('connect-flash');
 
 require('../passport/local-auth');
 
@@ -29,11 +30,16 @@ app.use(session({
     secret: 'XAXAXAXA',
     resave: true,
     saveUninitialized: true,
-    cookie: {
-        secure: false,
-        maxAge: 60000
-    }
+    // cookie: {
+    //     secure: false,
+    //     maxAge: 60000
+    // }
 }));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    next();
+});
 //PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());

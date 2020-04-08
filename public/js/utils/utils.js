@@ -1,7 +1,8 @@
-const notify = (msj1, msj2) => {
-    console.log('eee');
-    alertify.set('notifier', 'position', 'top-right');
-    alertify.success(`${msj1} ${msj2}`);
+const notify = (msj1) => {
+    if (msj1) {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success(`${msj1}`);
+    }
 };
 
 const acortarDescripcion = (str, num) => {
